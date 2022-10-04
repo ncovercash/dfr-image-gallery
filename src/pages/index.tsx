@@ -5,6 +5,7 @@ import {
   ImageListItem,
   ImageListItemBar,
   InputAdornment,
+  styled,
   TextField,
   useMediaQuery,
   useTheme,
@@ -14,7 +15,22 @@ import { useMemo } from "react";
 import { Link } from "react-router-dom";
 import useImages from "../data/useImages";
 
-export default function Home() {
+const SearchField = styled(TextField)({
+  "& input + fieldset": {
+    borderColor: "white !important",
+    borderWidth: "2px",
+    transition: "border-width 100ms",
+  },
+  "& input:focus + fieldset": {
+    // borderColor: "white",
+    borderWidth: "3px !important",
+  },
+  "& input": {
+    color: "white",
+  },
+});
+
+export default function Index() {
   const theme = useTheme();
   const isSm = useMediaQuery(theme.breakpoints.down("sm"));
   const isMd = useMediaQuery(theme.breakpoints.down("md"));
@@ -32,7 +48,7 @@ export default function Home() {
     }
   }, [isSm, isMd, isLg]);
 
-  const images = useImages();
+  const { images, setSearch } = useImages();
 
   return (
     <>
@@ -44,21 +60,27 @@ export default function Home() {
               width: "100%",
               display: "flex",
               padding: "1rem",
+              justifyContent: "space-between",
+              alignItems: "center",
             }}
           >
-            <Link to="/">
-              <a style={{ fontSize: "2rem" }}>Gallery</a>
+            <Link to="/" style={{ fontSize: "2rem" }}>
+              Gallery
             </Link>
-            <TextField
+            <SearchField
               label=""
               id="search"
-              sx={{ maxWidth: "25ch" }}
+              sx={{ maxWidth: "30vh" }}
+              fullWidth
               InputProps={{
                 startAdornment: (
                   <InputAdornment position="start">
-                    <SearchIcon />
+                    <SearchIcon htmlColor="white" />
                   </InputAdornment>
                 ),
+              }}
+              onChange={(e) => {
+                setSearch(e.target.value);
               }}
               variant="outlined"
             />
@@ -70,16 +92,14 @@ export default function Home() {
           <ImageList cols={numCols} gap={20}>
             {images.map((event) => (
               <Link key={event.url} to={`/${event.url}`}>
-                <a>
-                  <ImageListItem>
-                    <img
-                      src={event.images[0].src}
-                      alt={event.title}
-                      style={{ height: "min(40vh, 20rem)" }}
-                    />
-                    <ImageListItemBar title={event.title} subtitle={event.subtitle} />
-                  </ImageListItem>
-                </a>
+                <ImageListItem>
+                  <img
+                    src={event.images[0].src}
+                    alt={event.title}
+                    style={{ height: "min(40vh, 20rem)" }}
+                  />
+                  <ImageListItemBar title={event.title} subtitle={event.subtitle} />
+                </ImageListItem>
               </Link>
             ))}
           </ImageList>
