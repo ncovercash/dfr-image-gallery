@@ -4,9 +4,12 @@ import {
   ImageList,
   ImageListItem,
   ImageListItemBar,
+  InputAdornment,
+  TextField,
   useMediaQuery,
   useTheme,
 } from "@mui/material";
+import { Search as SearchIcon } from "@mui/icons-material";
 import { useMemo } from "react";
 import { Link } from "react-router-dom";
 import useImages from "../data/useImages";
@@ -46,6 +49,19 @@ export default function Home() {
             <Link to="/">
               <a style={{ fontSize: "2rem" }}>Gallery</a>
             </Link>
+            <TextField
+              label=""
+              id="search"
+              sx={{ maxWidth: "25ch" }}
+              InputProps={{
+                startAdornment: (
+                  <InputAdornment position="start">
+                    <SearchIcon />
+                  </InputAdornment>
+                ),
+              }}
+              variant="outlined"
+            />
           </Box>
         </nav>
       </header>
