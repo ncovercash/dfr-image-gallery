@@ -1,6 +1,7 @@
 import {
   Box,
   Container,
+  IconButton,
   ImageList,
   ImageListItem,
   ImageListItemBar,
@@ -11,7 +12,7 @@ import {
   useTheme,
 } from "@mui/material";
 import { Search as SearchIcon } from "@mui/icons-material";
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
 import { Link } from "react-router-dom";
 import useImages from "../data/useImages";
 
@@ -49,6 +50,7 @@ export default function Index() {
   }, [isSm, isMd, isLg]);
 
   const { images, setSearch } = useImages();
+  const [showSearchSm, setShowSearchSm] = useState<boolean>(false);
 
   return (
     <>
@@ -64,13 +66,28 @@ export default function Index() {
               alignItems: "center",
             }}
           >
-            <Link to="/" style={{ fontSize: "2rem" }}>
+            <Link
+              to="/"
+              style={{
+                fontSize: "2rem",
+                display: !isSm || !showSearchSm ? "inline-block" : "none",
+              }}
+            >
               Gallery
             </Link>
+            <IconButton
+              onClick={() => setShowSearchSm(true)}
+              sx={{ display: isSm && !showSearchSm ? "inline-block" : "none" }}
+            >
+              <SearchIcon htmlColor="white" />
+            </IconButton>
             <SearchField
               label=""
               id="search"
-              sx={{ maxWidth: "30vh" }}
+              sx={{
+                maxWidth: isSm ? undefined : "min(30vw, 500px)",
+                display: isSm && !showSearchSm ? "none" : "inline-block",
+              }}
               fullWidth
               InputProps={{
                 startAdornment: (
@@ -83,6 +100,7 @@ export default function Index() {
                 setSearch(e.target.value);
               }}
               variant="outlined"
+              onBlur={() => setShowSearchSm(false)}
             />
           </Box>
         </nav>
