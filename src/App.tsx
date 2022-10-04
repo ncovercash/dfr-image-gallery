@@ -2,6 +2,7 @@ import { ThemeProvider } from "@mui/material";
 import { createTheme } from "@mui/material/styles";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Index from "./pages";
+import EventPage from "./pages/Event";
 import "./styles/globals.scss";
 
 const theme = createTheme({
@@ -20,6 +21,10 @@ const router = createBrowserRouter(
     {
       path: "/",
       element: <Index />,
+    },
+    {
+      path: ":eventId",
+      element: <EventPage />,
     },
   ],
   { basename: "/Gallery" },
