@@ -1,5 +1,5 @@
 {
-  "extends": ["plugin:@next/next/recommended", "airbnb"],
+  "extends": ["airbnb"],
   "settings": {
     "import/resolver": {
       "webpack": {}
@@ -123,8 +123,7 @@
         "ts": "never",
         "tsx": "never"
       }
-    ],
-    "@next/next/no-img-element": "off"
+    ]
   },
   "overrides": [
     {

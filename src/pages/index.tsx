@@ -7,9 +7,8 @@ import {
   useMediaQuery,
   useTheme,
 } from "@mui/material";
-import Head from "next/head";
-import Link from "next/link";
 import { useMemo } from "react";
+import { Link } from "react-router-dom";
 import useImages from "../data/useImages";
 
 export default function Home() {
@@ -34,9 +33,6 @@ export default function Home() {
 
   return (
     <>
-      <Head>
-        <title>Gallery | Dutch Fork Runners</title>
-      </Head>
       <header>
         <nav>
           <Box
@@ -47,7 +43,7 @@ export default function Home() {
               padding: "1rem",
             }}
           >
-            <Link href="/">
+            <Link to="/">
               <a style={{ fontSize: "2rem" }}>Gallery</a>
             </Link>
           </Box>
@@ -57,7 +53,7 @@ export default function Home() {
         <Container maxWidth="xl">
           <ImageList cols={numCols} gap={20}>
             {images.map((event) => (
-              <Link key={event.url} href={`/${event.url}`}>
+              <Link key={event.url} to={`/${event.url}`}>
                 <a>
                   <ImageListItem>
                     <img
