@@ -8,4 +8,4 @@ First, run the development server:
 yarn start
 ```
 
-Open [http://localhost:3000/Gallery](http://localhost:3000/Gallery) with your browser to see the result.
+Then, open [http://localhost:3000/Gallery](http://localhost:3000/Gallery) with your browser to see the result.

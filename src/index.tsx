@@ -1,34 +1,10 @@
-import { ThemeProvider } from "@mui/material";
-import { createTheme } from "@mui/material/styles";
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import Index from "./pages";
-import "./styles/globals.scss";
+import React from "react";
+import ReactDOM from "react-dom/client";
+import App from "./App";
 
-const theme = createTheme({
-  palette: {
-    primary: {
-      main: "#0e4b2a",
-    },
-    secondary: {
-      main: "#1b5e20",
-    },
-  },
-});
-
-const router = createBrowserRouter(
-  [
-    {
-      path: "/",
-      element: <Index />,
-    },
-  ],
-  { basename: "/Gallery" },
+const root = ReactDOM.createRoot(document.getElementById("root") as HTMLElement);
+root.render(
+  <React.StrictMode>
+    <App />
+  </React.StrictMode>,
 );
-
-export default function App() {
-  return (
-    <ThemeProvider theme={theme}>
-      <RouterProvider router={router} />
-    </ThemeProvider>
-  );
-}
