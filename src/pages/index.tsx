@@ -1,11 +1,4 @@
-import {
-  Container,
-  ImageList,
-  ImageListItem,
-  ImageListItemBar,
-  useMediaQuery,
-  useTheme,
-} from "@mui/material";
+import { ImageList, ImageListItem, ImageListItemBar, useMediaQuery, useTheme } from "@mui/material";
 import { useMemo } from "react";
 import { Link } from "react-router-dom";
 import Navbar from "../components/Navbar";
@@ -34,22 +27,20 @@ export default function Index() {
     <>
       <Navbar setSearch={setSearch} />
       <main>
-        <Container maxWidth="xl">
-          <ImageList cols={numCols} gap={20}>
-            {images.map((event) => (
-              <Link key={event.url} to={`/${event.url}`}>
-                <ImageListItem>
-                  <img
-                    src={event.images[0].src}
-                    alt={event.title}
-                    style={{ height: "min(40vh, 20rem)", objectFit: "contain" }}
-                  />
-                  <ImageListItemBar title={event.title} subtitle={event.subtitle} />
-                </ImageListItem>
-              </Link>
-            ))}
-          </ImageList>
-        </Container>
+        <ImageList cols={numCols} gap={20}>
+          {images.map((event) => (
+            <Link key={event.url} to={`/${event.url}`}>
+              <ImageListItem>
+                <img
+                  src={event.images[0].src}
+                  alt={event.title}
+                  style={{ height: "min(40vh, 20rem)", objectFit: "contain" }}
+                />
+                <ImageListItemBar title={event.title} subtitle={event.subtitle} />
+              </ImageListItem>
+            </Link>
+          ))}
+        </ImageList>
       </main>
     </>
   );

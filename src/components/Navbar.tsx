@@ -1,6 +1,7 @@
-import { Search as SearchIcon } from "@mui/icons-material";
+import { Search as SearchIcon, NavigateNext as NavigateNextIcon } from "@mui/icons-material";
 import {
   Box,
+  Breadcrumbs,
   IconButton,
   InputAdornment,
   styled,
@@ -10,6 +11,7 @@ import {
 } from "@mui/material";
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import { Event } from "../data/useData";
 
 const SearchField = styled(TextField)({
   "& input + fieldset": {
@@ -26,7 +28,7 @@ const SearchField = styled(TextField)({
   },
 });
 
-export default function Navbar(props: { setSearch: (newSearch: string) => void }) {
+export default function Navbar(props: { setSearch: (newSearch: string) => void; event?: Event }) {
   const theme = useTheme();
 
   const isSm = useMediaQuery(theme.breakpoints.down("sm"));
@@ -46,15 +48,18 @@ export default function Navbar(props: { setSearch: (newSearch: string) => void }
             alignItems: "center",
           }}
         >
-          <Link
-            to="/"
+          <Breadcrumbs
+            separator={<NavigateNextIcon fontSize="large" />}
+            aria-label="breadcrumb"
             style={{
+              color: "white",
               fontSize: "2rem",
               display: !isSm || !showSearchSm ? "inline-block" : "none",
             }}
           >
-            Gallery
-          </Link>
+            <Link to="/">Gallery</Link>
+            {props.event ? <Link to={`/${props.event.url}`}>{props.event.title}</Link> : undefined}
+          </Breadcrumbs>
           <IconButton
             onClick={() => setShowSearchSm(true)}
             sx={{ display: isSm && !showSearchSm ? "inline-block" : "none" }}

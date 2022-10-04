@@ -28,7 +28,7 @@ export default function Event() {
 
   return (
     <>
-      <Navbar setSearch={setSearch} />
+      <Navbar setSearch={setSearch} event={event} />
       <main>
         <ImageList variant="masonry" cols={numCols} gap={20}>
           {images.map((img) => (

@@ -2,6 +2,7 @@
   "name": "dfr-image-gallery",
   "version": "0.1.0",
   "private": true,
+  "homepage": "https://dutchforkrunners.com/Gallery/",
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
