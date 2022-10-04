@@ -23,13 +23,7 @@
       }
     ],
     "import/no-unresolved": ["error", { "ignore": ["react", "react-dom", "stripes-config"] }],
-    "jsx-a11y/anchor-is-valid": [
-      "error",
-      {
-        "components": ["Link"],
-        "specialLink": ["to"]
-      }
-    ],
+    "jsx-a11y/anchor-is-valid": "off",
     "jsx-a11y/label-has-for": [
       "error",
       {
@@ -129,7 +123,8 @@
         "ts": "never",
         "tsx": "never"
       }
-    ]
+    ],
+    "@next/next/no-img-element": "off"
   },
   "overrides": [
     {
