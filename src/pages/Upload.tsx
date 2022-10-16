@@ -107,6 +107,7 @@ export default function UploadPage() {
                 style={{ fontWeight: "bold", textDecoration: "underline" }}
                 onClick={() => {
                   setDone(false);
+                  setUploadState("Upload");
                   setFiles([]);
                 }}
               >
