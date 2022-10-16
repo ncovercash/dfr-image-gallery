@@ -2,6 +2,7 @@ import { ImageList, ImageListItem, ImageListItemBar, useMediaQuery, useTheme } f
 import { useMemo } from "react";
 import { useParams } from "react-router-dom";
 import Navbar from "../components/Navbar";
+import UploadButton from "../components/UploadButton";
 import useEvent from "../data/useEvent";
 import useEventImages from "../data/useEventImages";
 
@@ -31,19 +32,23 @@ export default function Event() {
       <Navbar setSearch={setSearch} event={event} />
       <main>
         <ImageList variant="masonry" cols={numCols} gap={20}>
-          {images.map((img) => (
-            <a key={img.src} href={img.src}>
-              <ImageListItem>
-                <img
-                  src={img.src}
-                  alt={img.caption}
-                  style={{ height: "min(40vh, 20rem)", objectFit: "contain" }}
-                />
-                <ImageListItemBar title={img.caption} />
-              </ImageListItem>
-            </a>
-          ))}
+          {images === undefined
+            ? "Loading..."
+            : images.map((img) => (
+              <a key={img.src} href={img.src}>
+                <ImageListItem>
+                  <img
+                    src={img.src}
+                    alt={img.caption}
+                    style={{ height: "min(40vh, 20rem)", objectFit: "contain" }}
+                  />
+                  <ImageListItemBar title={img.caption} />
+                </ImageListItem>
+              </a>
+            ))}
         </ImageList>
+
+        <UploadButton state={event?.title} />
       </main>
     </>
   );

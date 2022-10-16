@@ -2,13 +2,17 @@ import fuzzysort from "fuzzysort";
 import { useMemo, useState } from "react";
 import { Event, EventImage } from "./useData";
 
-export default function useEventImages(event: Event): {
-  images: EventImage[];
+export default function useEventImages(event?: Event): {
+  images?: EventImage[];
   setSearch: (newSearch: string) => void;
 } {
   const [search, setSearch] = useState<string>("");
 
   const images = useMemo(() => {
+    if (event === undefined) {
+      return undefined;
+    }
+
     if (search.trim() === "") {
       return event.images;
     }

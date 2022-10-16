@@ -2,6 +2,7 @@ import { ImageList, ImageListItem, ImageListItemBar, useMediaQuery, useTheme } f
 import { useMemo } from "react";
 import { Link } from "react-router-dom";
 import Navbar from "../components/Navbar";
+import UploadButton from "../components/UploadButton";
 import useImages from "../data/useImages";
 
 export default function Index() {
@@ -28,19 +29,23 @@ export default function Index() {
       <Navbar setSearch={setSearch} />
       <main>
         <ImageList cols={numCols} gap={20}>
-          {images.map((event) => (
-            <Link key={event.url} to={`/${event.url}`}>
-              <ImageListItem>
-                <img
-                  src={event.images[0].src}
-                  alt={event.title}
-                  style={{ height: "min(40vh, 20rem)", objectFit: "contain" }}
-                />
-                <ImageListItemBar title={event.title} subtitle={event.subtitle} />
-              </ImageListItem>
-            </Link>
-          ))}
+          {images === undefined
+            ? "Loading..."
+            : images.map((event) => (
+              <Link key={event.url} to={`/${event.url}`}>
+                <ImageListItem>
+                  <img
+                    src={event.images[0].src}
+                    alt={event.title}
+                    style={{ height: "min(40vh, 20rem)", objectFit: "contain" }}
+                  />
+                  <ImageListItemBar title={event.title} subtitle={event.subtitle} />
+                </ImageListItem>
+              </Link>
+            ))}
         </ImageList>
+
+        <UploadButton />
       </main>
     </>
   );

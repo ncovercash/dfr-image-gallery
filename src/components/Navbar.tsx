@@ -28,7 +28,11 @@ const SearchField = styled(TextField)({
   },
 });
 
-export default function Navbar(props: { setSearch: (newSearch: string) => void; event?: Event }) {
+export default function Navbar(props: {
+  setSearch: (newSearch: string) => void;
+  event?: Event;
+  noSearch?: boolean;
+}) {
   const theme = useTheme();
 
   const isSm = useMediaQuery(theme.breakpoints.down("sm"));
@@ -62,7 +66,7 @@ export default function Navbar(props: { setSearch: (newSearch: string) => void; 
           </Breadcrumbs>
           <IconButton
             onClick={() => setShowSearchSm(true)}
-            sx={{ display: isSm && !showSearchSm ? "inline-block" : "none" }}
+            sx={{ display: !props.noSearch && isSm && !showSearchSm ? "inline-block" : "none" }}
           >
             <SearchIcon htmlColor="white" />
           </IconButton>
@@ -71,7 +75,7 @@ export default function Navbar(props: { setSearch: (newSearch: string) => void; 
             id="search"
             sx={{
               maxWidth: isSm ? undefined : "min(30vw, 500px)",
-              display: isSm && !showSearchSm ? "none" : "inline-block",
+              display: props.noSearch || (isSm && !showSearchSm) ? "none" : "inline-block",
             }}
             fullWidth
             InputProps={{

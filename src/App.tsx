@@ -1,12 +1,15 @@
-import { ThemeProvider } from "@mui/material";
+import { CssBaseline, ThemeProvider } from "@mui/material";
 import { createTheme } from "@mui/material/styles";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Index from "./pages";
 import EventPage from "./pages/Event";
+import UploadPage from "./pages/Upload";
 import "./styles/globals.scss";
 
 const theme = createTheme({
   palette: {
+    mode: "dark",
     primary: {
       main: "#0e4b2a",
     },
@@ -26,14 +29,23 @@ const router = createBrowserRouter(
       path: ":eventId",
       element: <EventPage />,
     },
+    {
+      path: "Upload",
+      element: <UploadPage />,
+    },
   ],
   { basename: "/Gallery" },
 );
 
+const queryClient = new QueryClient();
+
 export default function App() {
   return (
-    <ThemeProvider theme={theme}>
-      <RouterProvider router={router} />
-    </ThemeProvider>
+    <QueryClientProvider client={queryClient}>
+      <ThemeProvider theme={theme}>
+        <CssBaseline />
+        <RouterProvider router={router} />
+      </ThemeProvider>
+    </QueryClientProvider>
   );
 }
