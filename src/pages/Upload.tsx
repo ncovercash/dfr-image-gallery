@@ -18,6 +18,8 @@ import { FileRejection, useDropzone } from "react-dropzone";
 import { useLocation } from "react-router-dom";
 import Navbar from "../components/Navbar";
 
+const MAX_UPLOAD_SIZE = 20 * 1000 * 1000;
+
 const VisibleTextField = styled(TextField)({
   "& label.Mui-focused": {
     color: "white !important",
@@ -80,6 +82,7 @@ export default function UploadPage() {
     },
     multiple: true,
     onDrop: onDropCallback,
+    maxSize: MAX_UPLOAD_SIZE,
   });
 
   const [done, setDone] = useState<boolean>(false);
