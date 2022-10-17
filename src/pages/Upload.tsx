@@ -1,33 +1,15 @@
 import { Delete as DeleteIcon, Upload as UploadIcon } from "@mui/icons-material";
 import LoadingButton from "@mui/lab/LoadingButton";
-import {
-  Alert,
-  Button,
-  Container,
-  Divider,
-  Grid,
-  IconButton,
-  Snackbar,
-  styled,
-  TextField,
-} from "@mui/material";
+import { Alert, Button, Container, Divider, Grid, IconButton, Snackbar } from "@mui/material";
 import axios, { AxiosError } from "axios";
 import { nanoid } from "nanoid";
 import { ReactNode, useCallback, useRef, useState } from "react";
 import { FileRejection, useDropzone } from "react-dropzone";
 import { useLocation } from "react-router-dom";
 import Navbar from "../components/Navbar";
+import VisibleTextField from "../components/VisibleTextField";
 
 const MAX_UPLOAD_SIZE = 20 * 1000 * 1000;
-
-const VisibleTextField = styled(TextField)({
-  "& label.Mui-focused": {
-    color: "white !important",
-  },
-  "& input:focus + fieldset": {
-    borderColor: "white !important",
-  },
-});
 
 export default function UploadPage() {
   const defaultEvent = useLocation().state as string | undefined;
@@ -223,19 +205,15 @@ export default function UploadPage() {
                     data.append("caption", file.caption);
 
                     try {
-                      await axios.post(
-                        "https://dutchforkrunners.com/Gallery/api/upload.php",
-                        data,
-                        {
-                          onUploadProgress: (p) => {
-                            setUploadState(
-                              `${mainText} (${Math.round(
-                                (100 * p.loaded) / (p.total ?? p.loaded),
-                              )}%)...`,
-                            );
-                          },
+                      await axios.post("/Gallery/api/upload.php", data, {
+                        onUploadProgress: (p) => {
+                          setUploadState(
+                            `${mainText} (${Math.round(
+                              (100 * p.loaded) / (p.total ?? p.loaded),
+                            )}%)...`,
+                          );
                         },
-                      );
+                      });
                     } catch (_e) {
                       const e = _e as AxiosError;
                       // eslint-disable-next-line no-alert

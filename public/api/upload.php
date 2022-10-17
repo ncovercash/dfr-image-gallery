@@ -17,7 +17,9 @@ if (!isset($_FILES["file"]["error"]) || is_array($_FILES["file"]["error"])) {
 
 if ($_FILES["file"]["error"] !== UPLOAD_ERR_OK) {
   http_response_code(400);
-  die("File was unable to upload: code " . $_FILES["file"]["error"] . ".  Please ensure your files are each 20 MB each.");
+  die("File was unable to upload: code " .
+    $_FILES["file"]["error"] .
+    ".  Please ensure your files are each 20 MB each.");
 }
 
 $mimes = [

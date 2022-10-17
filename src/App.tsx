@@ -3,6 +3,7 @@ import { createTheme } from "@mui/material/styles";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Index from "./pages";
+import AdminPage from "./pages/Admin";
 import EventPage from "./pages/Event";
 import UploadPage from "./pages/Upload";
 import "./styles/globals.scss";
@@ -32,6 +33,10 @@ const router = createBrowserRouter(
     {
       path: "Upload",
       element: <UploadPage />,
+    },
+    {
+      path: "Admin",
+      element: <AdminPage />,
     },
   ],
   { basename: "/Gallery" },
