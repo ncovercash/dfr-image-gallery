@@ -1,4 +1,4 @@
-import { Login as LoginIcon, PropaneSharp } from "@mui/icons-material";
+import { Login as LoginIcon } from "@mui/icons-material";
 import LoadingButton from "@mui/lab/LoadingButton";
 import { Alert, Grid, Snackbar } from "@mui/material";
 import ky, { HTTPError } from "ky";
