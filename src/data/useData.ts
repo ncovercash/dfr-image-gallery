@@ -15,7 +15,9 @@ export interface Event {
 
 export default function useData(): Event[] | undefined {
   return useQuery<Event[]>(["images"], async () => {
-    const response = await ky.get("/Gallery/images.json");
+    const response = await ky.get("https://dutchforkrunners.com/Gallery/images.json", {
+      cache: "no-cache",
+    });
     return response.json<Event[]>();
   }).data;
 }

@@ -205,15 +205,19 @@ export default function UploadPage() {
                     data.append("caption", file.caption);
 
                     try {
-                      await axios.post("/Gallery/api/upload.php", data, {
-                        onUploadProgress: (p) => {
-                          setUploadState(
-                            `${mainText} (${Math.round(
-                              (100 * p.loaded) / (p.total ?? p.loaded),
-                            )}%)...`,
-                          );
+                      await axios.post(
+                        "https://dutchforkrunners.com/Gallery/api/upload.php",
+                        data,
+                        {
+                          onUploadProgress: (p) => {
+                            setUploadState(
+                              `${mainText} (${Math.round(
+                                (100 * p.loaded) / (p.total ?? p.loaded),
+                              )}%)...`,
+                            );
+                          },
                         },
-                      });
+                      );
                     } catch (_e) {
                       const e = _e as AxiosError;
                       // eslint-disable-next-line no-alert

@@ -1,8 +1,9 @@
 import { TabContext, TabList, TabPanel } from "@mui/lab";
-import { Box, Container, styled, Tab } from "@mui/material";
+import { Box, styled, Tab } from "@mui/material";
 import { ReactNode, useState } from "react";
-import AdminAuthenticationWall from "../components/AdminAuthenticationWall";
 import Navbar from "../components/Navbar";
+import AdminAuthenticationWall from "../views/AdminAuthenticationWall";
+import AdminOrganizationView from "../views/AdminOrganizationView";
 
 const StyledTab = styled(Tab)(() => ({
   "&.Mui-selected": {
@@ -29,31 +30,28 @@ export default function AdminPage() {
         setSearch={() => ({})}
         event={{ title: "Admin", url: "Admin", subtitle: "", images: [] }}
       />
-      <Container maxWidth="lg" sx={{ marginTop: 2 }}>
-        {authentication === false ? (
-          <AdminAuthenticationWall
-            setAuthentication={setAuthentication}
-            setSnackbar={setSnackbar}
-          />
-        ) : (
-          <main>
-            <TabContext value={tab}>
-              <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
-                <StyledTabList
-                  onChange={(_, t) => setTab(t)}
-                  textColor="primary"
-                  indicatorColor="primary"
-                >
-                  <StyledTab label="Organize Images" value="main" />
-                  <StyledTab label="Pending Images" value="approve" />
-                </StyledTabList>
-              </Box>
-              <TabPanel value="main">Item One</TabPanel>
-              <TabPanel value="approve">Item Two</TabPanel>
-            </TabContext>
-          </main>
-        )}
-      </Container>
+      {authentication === false ? (
+        <AdminAuthenticationWall setAuthentication={setAuthentication} setSnackbar={setSnackbar} />
+      ) : (
+        <main>
+          <TabContext value={tab}>
+            <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
+              <StyledTabList
+                onChange={(_, t) => setTab(t)}
+                textColor="primary"
+                indicatorColor="primary"
+              >
+                <StyledTab label="Organize Images" value="main" />
+                <StyledTab label="Pending Images" value="approve" />
+              </StyledTabList>
+            </Box>
+            <TabPanel value="main" sx={{ padding: 0 }}>
+              <AdminOrganizationView password={authentication} />
+            </TabPanel>
+            <TabPanel value="approve">Item Two</TabPanel>
+          </TabContext>
+        </main>
+      )}
     </>
   );
 }

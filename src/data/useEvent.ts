@@ -5,7 +5,7 @@ export default function useEvent(eventId: string | undefined): Event | undefined
 
   if (baseImageSet === undefined) return undefined;
 
-  const event = baseImageSet.filter((e) => e.url === eventId)[0];
+  const event = baseImageSet.filter((e) => e.url.toLowerCase() === eventId?.toLowerCase())[0];
 
   if (event === undefined) {
     throw new Error("Unknown URL");

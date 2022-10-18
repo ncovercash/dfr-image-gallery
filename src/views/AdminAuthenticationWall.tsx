@@ -1,9 +1,9 @@
 import { Login as LoginIcon } from "@mui/icons-material";
 import LoadingButton from "@mui/lab/LoadingButton";
-import { Alert, Grid, Snackbar } from "@mui/material";
+import { Alert, Container, Grid, Snackbar } from "@mui/material";
 import ky, { HTTPError } from "ky";
 import { ReactNode, useState } from "react";
-import VisibleTextField from "./VisibleTextField";
+import VisibleTextField from "../components/VisibleTextField";
 
 export default function AdminAuthenticationWall(props: {
   setAuthentication: (pass: string) => void;
@@ -12,7 +12,7 @@ export default function AdminAuthenticationWall(props: {
   const [loading, setLoading] = useState<boolean>(false);
 
   return (
-    <>
+    <Container maxWidth="lg">
       <h1>Please login</h1>
 
       <form
@@ -65,6 +65,6 @@ export default function AdminAuthenticationWall(props: {
           </Grid>
         </Grid>
       </form>
-    </>
+    </Container>
   );
 }

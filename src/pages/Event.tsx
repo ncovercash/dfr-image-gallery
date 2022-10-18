@@ -1,4 +1,4 @@
-import { ImageList, ImageListItem, ImageListItemBar, useMediaQuery, useTheme } from "@mui/material";
+import { Box, ImageList, ImageListItem, useMediaQuery, useTheme } from "@mui/material";
 import { useMemo } from "react";
 import { useParams } from "react-router-dom";
 import Navbar from "../components/Navbar";
@@ -42,7 +42,17 @@ export default function Event() {
                     alt={img.caption}
                     style={{ height: "min(40vh, 20rem)", objectFit: "contain" }}
                   />
-                  <ImageListItemBar title={img.caption} />
+
+                  <Box
+                    bottom={0}
+                    left={0}
+                    right={0}
+                    position="absolute"
+                    padding={1}
+                    sx={{ backgroundColor: "rgba(0,0,0,0.5)" }}
+                  >
+                    {img.caption}
+                  </Box>
                 </ImageListItem>
               </a>
             ))}
