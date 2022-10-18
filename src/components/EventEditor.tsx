@@ -1,7 +1,17 @@
-import { Delete as DeleteIcon, Edit as EditIcon } from "@mui/icons-material";
-import { Box, Button, Checkbox, ImageList, ImageListItem, MenuItem, Select } from "@mui/material";
+import {
+  closestCenter,
+  DndContext,
+  KeyboardSensor,
+  PointerSensor,
+  useSensor,
+  useSensors,
+} from "@dnd-kit/core";
+import { arrayMove, SortableContext, sortableKeyboardCoordinates } from "@dnd-kit/sortable";
+import { Delete as DeleteIcon } from "@mui/icons-material";
+import { Box, Button, Checkbox, ImageList, MenuItem, Select } from "@mui/material";
 import { useEffect, useState } from "react";
-import type { Event, EventImage } from "../data/useData";
+import type { Event } from "../data/useData";
+import EventEditorImage from "./EventEditorImage";
 
 // eslint-disable-next-line react/no-unused-prop-types
 export default function EventEditor(props: {
@@ -15,6 +25,13 @@ export default function EventEditor(props: {
 
   const allSelected = props.event.images.every((image) => !!selectedItems[image.src]);
   const numSelected = Object.values(selectedItems).filter((a) => a).length;
+
+  const sensors = useSensors(
+    useSensor(PointerSensor),
+    useSensor(KeyboardSensor, {
+      coordinateGetter: sortableKeyboardCoordinates,
+    }),
+  );
 
   return (
     <>
@@ -93,57 +110,43 @@ export default function EventEditor(props: {
           Delete
         </Button>
       </Box>
-      <ImageList cols={6} gap={10} sx={{ marginTop: "4rem" }}>
-        {props.event.images.map((image, i) => (
-          <ImageListItem
-            key={image.src}
-            sx={{ cursor: "pointer" }}
-            onClick={() => {
-              setSelectedItems({ ...selectedItems, [image.src]: !selectedItems[image.src] });
-            }}
-          >
-            <img
-              src={image.src}
-              alt={image.caption}
-              style={{ height: "min(40vh, 20rem)", objectFit: "contain" }}
-            />
-            <Box
-              bottom={0}
-              left={0}
-              right={0}
-              position="absolute"
-              padding={1}
-              sx={{ backgroundColor: "rgba(0,0,0,0.5)" }}
-              display="flex"
-              justifyContent="space-between"
-              alignItems="center"
-            >
-              <span>{image.caption}</span>
-              <Box display="flex" justifyContent="flex-end" alignItems="center">
-                <EditIcon
-                  onClick={() => {
-                    // eslint-disable-next-line no-alert
-                    const p = window.prompt("Please enter the new caption", image.caption);
-                    if (p !== null) {
-                      const newEvent = { ...props.event };
-                      newEvent.images[i].caption = p;
-                      props.setData(newEvent);
-                    }
-                  }}
-                />
-                <Checkbox
-                  color="default"
-                  checked={!!selectedItems[image.src]}
-                  onChange={(e) =>
-                    setSelectedItems({ ...selectedItems, [image.src]: e.target.checked })
-                  }
-                  inputProps={{ "aria-label": "controlled" }}
-                />
-              </Box>
-            </Box>
-          </ImageListItem>
-        ))}
-      </ImageList>
+
+      <DndContext
+        sensors={sensors}
+        collisionDetection={closestCenter}
+        onDragEnd={(e) => {
+          const { active, over } = e;
+
+          if (over !== null && active.id !== over.id) {
+            const oldIndex = props.event.images.map((i) => i.src).indexOf(active.id as string);
+            const newIndex = props.event.images.map((i) => i.src).indexOf(over.id as string);
+
+            const newData = [...props.event.images];
+            newData.splice(newIndex, 0, ...newData.splice(oldIndex, 1));
+
+            props.setData({
+              ...props.event,
+              images: newData,
+            });
+          }
+        }}
+      >
+        <SortableContext items={props.event.images.map((i) => i.src)}>
+          <ImageList cols={6} gap={10} sx={{ marginTop: "4rem" }}>
+            {props.event.images.map((image, i) => (
+              <EventEditorImage
+                key={i}
+                image={image}
+                i={i}
+                event={props.event}
+                setData={props.setData}
+                selectedItems={selectedItems}
+                setSelectedItems={setSelectedItems}
+              />
+            ))}
+          </ImageList>
+        </SortableContext>
+      </DndContext>
     </>
   );
 }
