@@ -7,6 +7,9 @@ const VisibleTextField = styled(TextField)({
   "& input:focus + fieldset": {
     borderColor: "white !important",
   },
+  "& .Mui-focused fieldset": {
+    borderColor: "white !important",
+  },
 });
 
 export default VisibleTextField;

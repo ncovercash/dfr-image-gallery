@@ -1,6 +1,15 @@
 import { Delete as DeleteIcon, Upload as UploadIcon } from "@mui/icons-material";
 import LoadingButton from "@mui/lab/LoadingButton";
-import { Alert, Button, Container, Divider, Grid, IconButton, Snackbar } from "@mui/material";
+import {
+  Alert,
+  Autocomplete,
+  Button,
+  Container,
+  Divider,
+  Grid,
+  IconButton,
+  Snackbar,
+} from "@mui/material";
 import axios, { AxiosError } from "axios";
 import { nanoid } from "nanoid";
 import { ReactNode, useCallback, useRef, useState } from "react";
@@ -8,10 +17,12 @@ import { FileRejection, useDropzone } from "react-dropzone";
 import { useLocation } from "react-router-dom";
 import Navbar from "../components/Navbar";
 import VisibleTextField from "../components/VisibleTextField";
+import useData from "../data/useData";
 
 const MAX_UPLOAD_SIZE = 20 * 1000 * 1000;
 
 export default function UploadPage() {
+  const data = useData();
   const defaultEvent = useLocation().state as string | undefined;
 
   const [snackbar, setSnackbar] = useState<ReactNode[]>([]);
@@ -136,18 +147,27 @@ export default function UploadPage() {
                       alignItems="center"
                       flexDirection="column"
                     >
-                      <VisibleTextField
-                        label="Event"
-                        value={image.event}
-                        onChange={(e) => {
-                          const n = [...files];
-                          n[i].event = e.target.value;
-                          setFiles(n);
-                        }}
-                        required={false}
-                        margin="dense"
+                      <Autocomplete
+                        freeSolo
                         fullWidth
+                        options={data?.map((e) => e.title) ?? []}
+                        renderInput={(params) => (
+                          <VisibleTextField
+                            {...params}
+                            label="Event"
+                            value={image.event}
+                            onChange={(e) => {
+                              const n = [...files];
+                              n[i].event = e.target.value;
+                              setFiles(n);
+                            }}
+                            required={false}
+                            margin="dense"
+                            fullWidth
+                          />
+                        )}
                       />
+
                       <VisibleTextField
                         label="Caption"
                         value={image.caption}
@@ -199,25 +219,21 @@ export default function UploadPage() {
                     const mainText = `Uploading file ${i} of ${files.length}`;
                     setUploadState(`${mainText}...`);
 
-                    const data = new FormData();
-                    data.append("file", file.file);
-                    data.append("event", file.event);
-                    data.append("caption", file.caption);
+                    const d = new FormData();
+                    d.append("file", file.file);
+                    d.append("event", file.event);
+                    d.append("caption", file.caption);
 
                     try {
-                      await axios.post(
-                        "https://dutchforkrunners.com/Gallery/api/upload.php",
-                        data,
-                        {
-                          onUploadProgress: (p) => {
-                            setUploadState(
-                              `${mainText} (${Math.round(
-                                (100 * p.loaded) / (p.total ?? p.loaded),
-                              )}%)...`,
-                            );
-                          },
+                      await axios.post("https://dutchforkrunners.com/Gallery/api/upload.php", d, {
+                        onUploadProgress: (p) => {
+                          setUploadState(
+                            `${mainText} (${Math.round(
+                              (100 * p.loaded) / (p.total ?? p.loaded),
+                            )}%)...`,
+                          );
                         },
-                      );
+                      });
                     } catch (_e) {
                       const e = _e as AxiosError;
                       // eslint-disable-next-line no-alert
