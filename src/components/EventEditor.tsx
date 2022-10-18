@@ -6,7 +6,7 @@ import {
   useSensor,
   useSensors,
 } from "@dnd-kit/core";
-import { arrayMove, SortableContext, sortableKeyboardCoordinates } from "@dnd-kit/sortable";
+import { SortableContext, sortableKeyboardCoordinates } from "@dnd-kit/sortable";
 import { Delete as DeleteIcon } from "@mui/icons-material";
 import { Box, Button, Checkbox, ImageList, MenuItem, Select } from "@mui/material";
 import { useEffect, useState } from "react";
@@ -71,7 +71,10 @@ export default function EventEditor(props: {
             for (let i = 0; i < newData.length; i++) {
               // remove from current event
               if (newData[i].url === props.event.url) {
-                newData[i].images = props.event.images.filter((image) => !selectedItems[image.src]);
+                newData[i] = {
+                  ...newData[i],
+                  images: props.event.images.filter((image) => !selectedItems[image.src]),
+                };
               }
               // add to target
               if (newData[i].url === e.target.value) {

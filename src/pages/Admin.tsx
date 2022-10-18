@@ -2,6 +2,7 @@ import { TabContext, TabList, TabPanel } from "@mui/lab";
 import { Box, styled, Tab } from "@mui/material";
 import { ReactNode, useState } from "react";
 import Navbar from "../components/Navbar";
+import AdminApprovalView from "../views/AdminApprovalView";
 import AdminAuthenticationWall from "../views/AdminAuthenticationWall";
 import AdminOrganizationView from "../views/AdminOrganizationView";
 
@@ -48,7 +49,9 @@ export default function AdminPage() {
             <TabPanel value="main" sx={{ padding: 0 }}>
               <AdminOrganizationView password={authentication} />
             </TabPanel>
-            <TabPanel value="approve">Item Two</TabPanel>
+            <TabPanel value="approve">
+              <AdminApprovalView password={authentication} />
+            </TabPanel>
           </TabContext>
         </main>
       )}
