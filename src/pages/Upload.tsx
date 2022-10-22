@@ -151,16 +151,16 @@ export default function UploadPage() {
                         freeSolo
                         fullWidth
                         options={data?.map((e) => e.title) ?? []}
+                        inputValue={image.event}
+                        onInputChange={(e, newEvent) => {
+                          const n = [...files];
+                          n[i].event = newEvent;
+                          setFiles(n);
+                        }}
                         renderInput={(params) => (
                           <VisibleTextField
                             {...params}
                             label="Event"
-                            value={image.event}
-                            onChange={(e) => {
-                              const n = [...files];
-                              n[i].event = e.target.value;
-                              setFiles(n);
-                            }}
                             required={false}
                             margin="dense"
                             fullWidth
