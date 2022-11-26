@@ -19,7 +19,7 @@
     "@mui/lab": "5.0.0-alpha.109",
     "@mui/material": "5.10.15",
     "@mui/x-data-grid": "5.17.13",
-    "@tanstack/react-query": "4.17.1",
+    "@tanstack/react-query": "4.18.0",
     "axios": "1.2.0",
     "fuzzysort": "2.0.4",
     "ky": "0.32.2",
