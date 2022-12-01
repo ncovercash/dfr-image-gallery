@@ -18,7 +18,7 @@
     "@mui/icons-material": "5.10.16",
     "@mui/lab": "5.0.0-alpha.110",
     "@mui/material": "5.10.16",
-    "@mui/x-data-grid": "5.17.13",
+    "@mui/x-data-grid": "5.17.14",
     "@tanstack/react-query": "4.18.0",
     "axios": "1.2.0",
     "fuzzysort": "2.0.4",
