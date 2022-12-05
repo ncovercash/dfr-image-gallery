@@ -20,7 +20,7 @@
     "@mui/material": "5.10.16",
     "@mui/x-data-grid": "5.17.14",
     "@tanstack/react-query": "4.19.1",
-    "axios": "1.2.0",
+    "axios": "1.2.1",
     "fuzzysort": "2.0.4",
     "ky": "0.32.2",
     "nanoid": "4.0.0",
