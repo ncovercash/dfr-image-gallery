@@ -30,7 +30,7 @@
     "react-dropzone": "14.2.3",
     "react-router-dom": "6.5.0",
     "react-scripts": "5.0.1",
-    "sass": "1.56.2"
+    "sass": "1.57.0"
   },
   "devDependencies": {
     "@types/axios": "0.14.0",
