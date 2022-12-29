@@ -22,7 +22,7 @@
     "@tanstack/react-query": "4.20.4",
     "axios": "1.2.2",
     "fuzzysort": "2.0.4",
-    "ky": "0.33.0",
+    "ky": "0.33.1",
     "nanoid": "4.0.0",
     "react": "18.2.0",
     "react-beautiful-dnd": "13.1.1",
