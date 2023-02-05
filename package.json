@@ -23,7 +23,7 @@
     "axios": "1.3.2",
     "fuzzysort": "2.0.4",
     "ky": "0.33.2",
-    "nanoid": "4.0.0",
+    "nanoid": "4.0.1",
     "react": "18.2.0",
     "react-beautiful-dnd": "13.1.1",
     "react-dom": "18.2.0",
