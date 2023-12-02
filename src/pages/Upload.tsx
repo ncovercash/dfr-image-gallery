@@ -225,7 +225,7 @@ export default function UploadPage() {
                     d.append("caption", file.caption);
 
                     try {
-                      await axios.post("https://dutchforkrunners.com/Gallery/api/upload.php", d, {
+                      await axios.post("/Gallery/api/upload.php", d, {
                         onUploadProgress: (p) => {
                           setUploadState(
                             `${mainText} (${Math.round(
