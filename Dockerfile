@@ -13,7 +13,7 @@ FROM node:20-alpine AS build
 
   RUN yarn run build
 
-FROM trafex/php-nginx:latest AS final
+FROM ghcr.io/ncovercash/docker-php-nginx:v1.0.2 AS final
 
   COPY --from=build /app/build /var/www/html/Gallery
 
