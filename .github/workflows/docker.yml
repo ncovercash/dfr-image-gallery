@@ -48,12 +48,9 @@ jobs:
           tags: tag:gh-actions
 
       - name: Deploy
-        uses: appleboy/ssh-action@v1.0.0
-        with:
-          host: ${{ secrets.DEPLOY_SSH_HOST }}
-          username: ${{ secrets.DEPLOY_SSH_USERNAME }}
-          key: ${{ secrets.DEPLOY_SSH_KEY }}
-          script_stop: true
-          script: |
-            dc run watchtower --no-startup-message --run-once dutch-fork-runners-gallery
-            dc up dutch-fork-runners-gallery --wait
+        run: |
+              ssh -o StrictHostKeyChecking=no ${{ secrets.DEPLOY_SSH_USERNAME }}@${{ secrets.DEPLOY_SSH_HOST }} '
+                cd /docker
+                docker compose run watchtower --run-once --no-startup-message $(docker inspect -f '{{.Name}}' $(docker compose ps -q dutch-fork-runners-gallery) | cut -c2-)
+                docker compose up --wait dutch-fork-runners-gallery
+                '
