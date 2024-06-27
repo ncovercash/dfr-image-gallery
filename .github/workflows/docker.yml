@@ -51,4 +51,4 @@ jobs:
       DEPLOY_SSH_HOST: ${{ secrets.DEPLOY_SSH_HOST }}
       DEPLOY_SSH_USERNAME: ${{ secrets.DEPLOY_SSH_USERNAME }}
     with:
-      service-name: dutch-fork-runners
+      service-name: dutch-fork-runners-gallery
