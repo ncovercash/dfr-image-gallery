@@ -1,8 +1,8 @@
-name: build and publish docker
+name: Docker
 
 on:
   push:
-    branches: ['main']
+    branches: ["main"]
 
 env:
   REGISTRY: ghcr.io
@@ -34,23 +34,21 @@ jobs:
           images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
 
       - name: Build and push Docker image
-        uses: docker/build-push-action@v5
+        uses: docker/build-push-action@v6
         with:
+          context: .
           push: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
 
-      - name: Connect to intranet
-        uses: tailscale/github-action@v2
-        with:
-          oauth-client-id: ${{ secrets.TS_OAUTH_CLIENT_ID }}
-          oauth-secret: ${{ secrets.TS_OAUTH_SECRET }}
-          tags: tag:gh-actions
-
-      - name: Deploy
-        run: |
-              ssh -o StrictHostKeyChecking=no ${{ secrets.DEPLOY_SSH_USERNAME }}@${{ secrets.DEPLOY_SSH_HOST }} '
-                cd /docker
-                docker compose run watchtower --run-once --no-startup-message $(docker inspect -f '{{.Name}}' $(docker compose ps -q dutch-fork-runners-gallery) | cut -c2-)
-                docker compose up --wait dutch-fork-runners-gallery
-                '
+  deploy:
+    needs: [build-and-push-image]
+    if: ${{ github.ref_name == github.event.repository.default_branch }}
+    uses: foxy-development/configs/.github/workflows/deploy.yaml@main
+    secrets:
+      TS_OAUTH_CLIENT_ID: ${{ secrets.TS_OAUTH_CLIENT_ID }}
+      TS_OAUTH_SECRET: ${{ secrets.TS_OAUTH_SECRET }}
+      DEPLOY_SSH_HOST: ${{ secrets.DEPLOY_SSH_HOST }}
+      DEPLOY_SSH_USERNAME: ${{ secrets.DEPLOY_SSH_USERNAME }}
+    with:
+      service-name: dutch-fork-runners
