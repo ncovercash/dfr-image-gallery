@@ -24,11 +24,7 @@ export default function AdminEventSidebar({
 }) {
   const eventDragger = useCallback(
     (result: DropResult | DragUpdate) => {
-      if (
-        data === undefined ||
-        result.destination === undefined ||
-        ("reason" in result && result?.reason === "CANCEL")
-      ) {
+      if (!data || !result.destination || ("reason" in result && result?.reason === "CANCEL")) {
         return;
       }
       if (
@@ -74,8 +70,8 @@ export default function AdminEventSidebar({
                         style={
                           event.url === curEvent?.url
                             ? {
-                              fontWeight: "bold",
-                            }
+                                fontWeight: "bold",
+                              }
                             : {}
                         }
                       >
@@ -98,7 +94,8 @@ export default function AdminEventSidebar({
                             if (
                               // eslint-disable-next-line no-restricted-globals, no-alert
                               !confirm(`Please confirm that you want to delete "${event.title}"`)
-                            ) return;
+                            )
+                              return;
 
                             const newData = [...data];
                             newData.splice(i, 1);
